@@ -5,18 +5,18 @@ Heavy Light Decomposition
 This repository presents a technique called Heavy Light Decomposition of a tree.
 
 
-=========================
 
 
 Definition
+=========================
 
 The heavy-light decomposition of a tree T = (V,E) is a coloring of the tree's edges. Each edge is either heavy or light. To determine which, consider the edge's two endpoints: one is closer to the root, and one is further away. If the size of the subtree rooted at the latter is more than half that of the subtree rooted at the former, the edge is heavy. Otherwise, it is light.
 
 
-=========================
 
 
 Basic Idea
+=========================
 
 Consider a node x. Let x have children u and v.
 
@@ -38,18 +38,18 @@ Hence, there can at the most only one heavy edge connecting a node to its childr
 So, if we look at a node, there can be at the most two heavy edges it may be connected to. One with its parent and the other with one of its children.
 
 
-=========================
 
 
 Light Edges
+=========================
 
 Considering the light edges, suppose if the edge x-y is light. Therefore, size(y) <= 1/2 * size(x), which means whenever we follow a light edge, the size of the tree is atleast halved. As a result, the number of light edges is O(lg n).
 
 
-=========================
 
 
 Building the Heavy Light Decomposition
+=========================
 
 The heavy light decomposition can be built using dfs. Pseudo Code for the same is given below.
 
@@ -59,11 +59,11 @@ procedure DFS(G,v):
           if vertex w is not labeled as discovered then
               recursively call DFS(G,w)
               
-              
-=========================
+
 
 
 Ancestors and Lowest Common Ancestor
+=========================
 
 One of the major applications of the heavy light decomposition is the Lowest Common Ancestor queries.
 
