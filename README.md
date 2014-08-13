@@ -10,7 +10,15 @@ This repository presents a technique called Heavy Light Decomposition of a tree.
 Definition
 =========================
 
-The heavy-light decomposition of a tree T = (V,E) is a coloring of the tree's edges. Each edge is either heavy or light. To determine which, consider the edge's two endpoints: one is closer to the root, and one is further away. If the size of the subtree rooted at the latter is more than half that of the subtree rooted at the former, the edge is heavy. Otherwise, it is light.
+The heavy-light decomposition of a tree T = (V,E) is a coloring of the tree's edges.
+
+Each edge is either heavy or light.
+
+To determine which, consider the edge's two endpoints: one is closer to the root, and one is further away.
+
+If the size of the subtree rooted at the latter is more than half that of the subtree rooted at the former, the edge is heavy.
+
+Otherwise, it is light.
 
 
 
@@ -22,7 +30,9 @@ Consider a node x. Let x have children u and v.
 
 The edge x-u is called heavy if size(u) > 1/2 * size(x), otherwise it is called a light edge.
 
-If a node has many children, then it is easy to note that at the most there can only be one heavy edge. It can be shown as follows:
+If a node has many children, then it is easy to note that at the most there can only be one heavy edge.
+
+It can be shown as follows:
 
 Let the node be z and its children be u1,u2,….
 
@@ -35,7 +45,9 @@ which is a contradiction as size(u1) + size(u2) + size(u3) + … <= size(z)
 
 Hence, there can at the most only one heavy edge connecting a node to its children.
 
-So, if we look at a node, there can be at the most two heavy edges it may be connected to. One with its parent and the other with one of its children.
+So, if we look at a node, there can be at the most two heavy edges it may be connected to.
+
+One with its parent and the other with one of its children.
 
 
 
@@ -53,12 +65,12 @@ Building the Heavy Light Decomposition
 
 The heavy light decomposition can be built using dfs. Pseudo Code for the same is given below.
 
-procedure DFS(G,v):
+	procedure DFS(G,v):
        label v as discovered
        for all edges from v to w in G.adjacentEdges(v) do
-          if vertex w is not labeled as discovered then
-              recursively call DFS(G,w)
-              
+              if vertex w is not labeled as discovered then
+                     recursively call DFS(G,w)
+
 
 
 
