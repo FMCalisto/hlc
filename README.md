@@ -1,4 +1,4 @@
-# QUICK EXPLANATION
+# Quick Explanation
 
 Firstly it is obvious that a connected graph on `N` vertices with `N` edges will contain exactly one cycle.
 
