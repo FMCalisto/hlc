@@ -1,6 +1,6 @@
 # QUICK EXPLANATION
 
-Firstly it is obvious that a connected graph on N vertices with N edges will contain exactly one cycle.
+Firstly it is obvious that a connected graph on 'N' vertices with N edges will contain exactly one cycle.
 
 It is not necessary for that cycle to be an odd-length cycle; but the problem statement assures you that such a cycle will always be odd length. This constraint ensures that there is always a unique shortest path between any two vertices in the graph.
 
