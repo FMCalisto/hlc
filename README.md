@@ -1,87 +1,29 @@
-Heavy Light Decomposition
-=========================
+# QUICK EXPLANATION
 
+Firstly it is obvious that a connected graph on N vertices with N edges will contain exactly one cycle.
 
-This repository presents a technique called Heavy Light Decomposition of a tree.
+It is not necessary for that cycle to be an odd-length cycle; but the problem statement assures you that such a cycle will always be odd length. This constraint ensures that there is always a unique shortest path between any two vertices in the graph.
 
+Let us explore an easy to state solution for this graph.
 
+For either of the flip or find operations, we will move along the unique path in the graph, edge by edge, and update / calculate the result. The update will of course change the sign of the edge weight. The result can of course be calculated using Kadane's algorithm.
 
+How do we exactly trace the shortest path between any two vertices? We use the following insights
 
-Definition
-=========================
+The graph has a single cycle
+Vertices of this cycle behave as roots of connected trees
+Now, for each of the trees, we can orient them. This effectively means that for each vertex in the tree, we can mark its unique parent, right up to the root, which lies in the cycle. We of course do not mark the root of the tree.
 
-The heavy-light decomposition of a tree T = (V,E) is a coloring of the tree's edges.
+For each vertex we can mark which tree it belongs to (probably just store the label of the root vertex of the tree). This helps us figure out for some given vertices u and v, whether they are in the same tree or not.
 
-Each edge is either heavy or light.
+Now, we can trace the path from u to v
 
-To determine which, consider the edge's two endpoints: one is closer to the root, and one is further away.
+If they are in the same tree, we can find their LCA.
+This will require calculating the depth for each vertex
+If they are in separate trees
+The path of both the vertices to their roots, say s and t respectively are to be considered
+Then the path from s to t, through the cycle, should be considered
+The path from the cycle should be the smaller one. This can be determined trivially by arranging the vertices in an array in a clockwise (or counter-clockwise) traversal of the vertices in the cycle.
+The complextiy of each flip or find opeartion will be O(N). As you can figure, this is too low.
 
-If the size of the subtree rooted at the latter is more than half that of the subtree rooted at the former, the edge is heavy.
-
-Otherwise, it is light.
-
-
-
-
-Basic Idea
-=========================
-
-Consider a node x. Let x have children u and v.
-
-The edge x-u is called heavy if size(u) > 1/2 * size(x), otherwise it is called a light edge.
-
-If a node has many children, then it is easy to note that at the most there can only be one heavy edge.
-
-It can be shown as follows:
-
-Let the node be z and its children be u1,u2,….
-
-Now,let the edge z-u1 and z-u2 be the heavy edges.
-
-=> size(u1) > 1/2 * size(z) and size(u2) > 1/2 * size(z)
-=> size(u1) + size(u2) > size(z)
-
-which is a contradiction as size(u1) + size(u2) + size(u3) + … <= size(z)
-
-Hence, there can at the most only one heavy edge connecting a node to its children.
-
-So, if we look at a node, there can be at the most two heavy edges it may be connected to.
-
-One with its parent and the other with one of its children.
-
-
-
-
-Light Edges
-=========================
-
-Considering the light edges, suppose if the edge x-y is light. Therefore, size(y) <= 1/2 * size(x), which means whenever we follow a light edge, the size of the tree is atleast halved. As a result, the number of light edges is O(lg n).
-
-
-
-
-Building the Heavy Light Decomposition
-=========================
-
-The heavy light decomposition can be built using dfs. Pseudo Code for the same is given below.
-
-	procedure DFS(G,v):
-       label v as discovered
-       for all edges from v to w in G.adjacentEdges(v) do
-              if vertex w is not labeled as discovered then
-                     recursively call DFS(G,w)
-
-
-
-
-Ancestors and Lowest Common Ancestor
-=========================
-
-One of the major applications of the heavy light decomposition is the Lowest Common Ancestor queries.
-
-Suppose if we want to find the whether a node is and ancestor of another node. This can be easily done using the time_in and time_out arrays computed in the above DFS code.time_in entry for a node gives the time when the node is first discovered and the time_out entry determines the time when all of its children have been explored. Let the nodes be x and y. The following condition checks if x is an ancestor of y:
-
-if time_in[x] < time_in[y] and time_out[x] > time_out[y]
-then print x is an ancestor of y
-
-If we consider a Heavy Light Decomposition of a tree, then there will be chains heavy edges and then we will have the light edges. We can completely skip the heavy edges. Below is the pseudocode for the LCA problems which uses the above described ideas.
+Let us see how to make this O(log2 N).
